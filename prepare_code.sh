@@ -28,12 +28,12 @@ sed -i "s|infinity://localhost|$REDIRECT_URI|" $APIUTILS_FILE
 sed -i "s|public static final String USER_AGENT = \".*\";|public static final String USER_AGENT = \"$USER_AGENT\";|" $APIUTILS_FILE
 
 # Add keystore
-wget -P /content/ "https://github.com/TanukiAI/Infinity-keystore/raw/main/Infinity.jks"
+wget -O Infinity.jks "https://github.com/TanukiAI/Infinity-keystore/raw/main/Infinity.jks"
 BUILD_GRADLE_FILE="app/build.gradle"
 sed -i '/buildTypes {/a \
     signingConfigs { \
         release { \
-            storeFile file("/content/Infinity.jks") \
+            storeFile file("Infinity.jks") \
             storePassword "Infinity" \
             keyAlias "Infinity" \
             keyPassword "Infinity" \
