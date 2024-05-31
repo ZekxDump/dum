@@ -13,7 +13,7 @@ jobs:
       REDIRECT_URI: 'http://127.0.0.1'
       USER_AGENT: "android:personal-app:0.0.1 (by /u/${{ secrets.REDDIT_USERNAME }}"
       TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-      TELEGRAM_CHAT_ID: '123456789' # Your Telegram Chat ID as a string
+      TELEGRAM_CHAT_ID: '-1002248277012' # Your Telegram Chat ID as a string
 
     steps:
     - name: Checkout repository
