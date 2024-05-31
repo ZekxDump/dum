@@ -8,8 +8,8 @@ fi
 cd Infinity-For-Reddit || exit
 
 # Build the APK
-./gradlew updateLintBaseline
-./gradlew assembleRelease
+./gradlew updateLintBaseline --debug
+./gradlew assembleRelease --debug
 
 # Move the APK to a known location
 mv app/build/outputs/apk/release/app*.apk /content/Infinity.apk
