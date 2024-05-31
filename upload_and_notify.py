@@ -1,7 +1,6 @@
+import os
 import requests
 import pyqrcode
-import os
-import telegram
 
 def upload_to_catbox(file_path):
     url = "https://litterbox.catbox.moe/resources/internals/api.php"
@@ -23,9 +22,16 @@ def upload_to_fileio(file_path):
     return None
 
 def send_telegram_message(token, chat_id, message, image_path):
-    bot = telegram.Bot(token=token)
+    send_message_url = f"https://api.telegram.org/bot{token}/sendPhoto"
     with open(image_path, 'rb') as photo:
-        bot.send_photo(chat_id=chat_id, photo=photo, caption=message)
+        files = {'photo': photo}
+        data = {
+            'chat_id': chat_id,
+            'caption': message,
+            'parse_mode': 'MarkdownV2'
+        }
+        response = requests.post(send_message_url, files=files, data=data)
+    return response.json()
 
 def main():
     file_path = "Infinity.apk"
@@ -46,10 +52,10 @@ def main():
     fileio_qr.png(fileio_qr_image_path, scale=10)
 
     # Send URLs and QR codes via Telegram
-    catbox_message = f"Download URL (Catbox): {catbox_url}"
+    catbox_message = f"Download URL (Catbox): [{catbox_url}]({catbox_url})"
     send_telegram_message(telegram_token, telegram_chat_id, catbox_message, catbox_qr_image_path)
 
-    fileio_message = f"Download URL (File.io): {fileio_url}"
+    fileio_message = f"Download URL (File.io): [{fileio_url}]({fileio_url})"
     send_telegram_message(telegram_token, telegram_chat_id, fileio_message, fileio_qr_image_path)
 
     print("Upload and notification completed.")
