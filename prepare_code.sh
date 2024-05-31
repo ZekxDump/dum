@@ -18,9 +18,7 @@ else
 fi
 
 # Download project
-wget "https://github.com/Docile-Alligator/Infinity-For-Reddit/archive/a46e96f3e48a89f7b683fa7308c39f01c5b5ac21.zip"
-unzip "a46e96f3e48a89f7b683fa7308c39f01c5b5ac21.zip"
-mv Infinity-For-Reddit-* Infinity-For-Reddit
+git clone "https://github.com/Docile-Alligator/Infinity-For-Reddit"
 cd Infinity-For-Reddit/
 
 # Modify API settings
