@@ -1,0 +1,50 @@
+name: Build and Test Android App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      API_TOKEN: ${{ secrets.API_TOKEN }}
+      REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
+      REDIRECT_URI: 'http://127.0.0.1'
+      USER_AGENT: "android:personal-app:0.0.1 (by /u/${{ secrets.REDDIT_USERNAME }}"
+      TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+      TELEGRAM_CHAT_ID: '123456789' # Your Telegram Chat ID as a string
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'adopt'
+        java-version: '17'
+
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v2
+      with:
+        api-level: 30
+        build-tools: 30.0.3
+
+    - name: Prepare code
+      run: |
+        chmod +x prepare_code.sh
+        ./prepare_code.sh
+
+    - name: Build APK
+      run: |
+        chmod +x build_apk.sh
+        ./build_apk.sh
+
+    - name: Install Python dependencies
+      run: |
+        pip install requests pyqrcode pypng python-telegram-bot
+
+    - name: Upload APK and send Telegram notification
+      run: |
+        python upload_and_notify.py
